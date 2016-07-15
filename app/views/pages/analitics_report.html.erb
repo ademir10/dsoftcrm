@@ -155,7 +155,7 @@
   </h5>
 </div>
 <% end %>
-
+<!-- REMOVENDO O RODOVIÁRIO
 <% if @rodosearch.present? %>
 <div class="panel panel-default">
   <div class="panel-heading" >Transportes Rodoviários - Total vendido R$: <b><%= @total_rodosearch %></b></div>
@@ -189,7 +189,9 @@
 </div>
 <% end %>
 
-<% if @meeting.blank? && @packsearch.blank? && @airsearch.blank? && @rodosearch.blank? %>
+-->
+
+<% if @meeting.blank? && @packsearch.blank? && @airsearch.blank? %>
 <h4 class="jumbotron">Não existem dados com base nos parametros informados.</h4>
 <% else %>
 <h2 class="panel-body">Total Geral vendido R$: <strong><%= @total_geral %></strong></h2>

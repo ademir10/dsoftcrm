@@ -23,6 +23,10 @@ class SessionsController < ApplicationController
       end
      end
      
+     check_date = ExpireDate.first
+     if check_date.active == true && current_user.type_access != 'MASTER'
+       flash[:success] = 'Olá ' + current_user.name + '! ' + 'esta é uma licença de teste válida até o dia ' + check_date.date_expire.to_s + ' esperamos que aproveite ao máximo essa experiência!'
+     end
       redirect_to meetings_path
     
     else

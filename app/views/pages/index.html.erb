@@ -20,11 +20,13 @@
 
 <% else %> 
 <div class="container" align="center">
-<%= image_tag "logo_mini.png" %>
+<p>	
+<%= image_tag "logo-travel.png" %>
 
 <div class="container">
 <% @categories.each do |f| %>
-<% if f.link != nil %>
+<!-- INSERI AQUI O FILTRO PARA REMOVER O TRANSPORTE RODOVIÁRIO -->
+<% if f.link != nil && f.name != "Transporte Rodoviário" %>
 <%= link_to f.name, f.link, class: 'btn btn-default btn-lg' %>
 <% end %>
 <% end %>

@@ -102,6 +102,11 @@ class PagesController < ApplicationController
           }
       })
     
+
+
+=begin 
+  
+
       #transporte rodoviario
       rodo_annual = Rodosearch.select("date_trunc( 'month', created_at ) as month, sum(cotation_value) as total_quantity").where(finished: 'SIM').group('month').order('month')
       rodosearch_by_month = []
@@ -132,8 +137,12 @@ class PagesController < ApplicationController
               :data => rodosearch_by_month
           }
       })
-      
+=end      
     end 
+
+  
+
+
     
     #Pesquisas pendentes com status "NÃO DEFINIDO"
     def pendencies_report
@@ -154,28 +163,28 @@ class PagesController < ApplicationController
           if params[:seller].blank? && params[:date1].blank? && params[:date2].blank?
             @packsearch = Packsearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date ?",Date.today).order(:updated_at)
             @airsearch = Airsearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date ?",Date.today).order(:updated_at)
-            @rodosearch = Rodosearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date ?",Date.today).order(:updated_at)
+            #@rodosearch = Rodosearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date ?",Date.today).order(:updated_at)
           end
           
           #Se tiver informado somente as datas
           if params[:seller].blank? && params[:date1].present? && params[:date2].present?
             @packsearch = Packsearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
             @airsearch = Airsearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
-            @rodosearch = Rodosearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
+            #@rodosearch = Rodosearch.where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
           end
           
           #Se tiver informado o funcionario e as datas
           if params[:seller].present? && params[:date1].present? && params[:date2].present?
             @packsearch = Packsearch.where(user: params[:seller]).where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
             @airsearch = Airsearch.where(user: params[:seller]).where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
-            @rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
+            #@rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'NÃO DEFINIDO').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
           end
           
        else
         #se o usuário for USER
         @packsearch = Packsearch.where(user: current_user.name).where(status: 'NÃO DEFINIDO')
         @airsearch = Airsearch.where(user: current_user.name).where(status: 'NÃO DEFINIDO')
-        @rodosearch = Rodosearch.where(user: current_user.name).where(status: 'NÃO DEFINIDO')
+        #@rodosearch = Rodosearch.where(user: current_user.name).where(status: 'NÃO DEFINIDO')
        end       
          
   end
@@ -198,11 +207,11 @@ class PagesController < ApplicationController
     if params[:date1].blank? || params[:date2].blank?
        @qnt_pack = Packsearch.where(finished: 'SIM').where("updated_at::Date = ?", Date.today).count
        @qnt_air = Airsearch.where(finished: 'SIM').where("updated_at::Date = ?", Date.today).count
-       @qnt_rodo = Rodosearch.where(finished: 'SIM').where("updated_at::Date = ?", Date.today).count
+       #@qnt_rodo = Rodosearch.where(finished: 'SIM').where("updated_at::Date = ?", Date.today).count
      else
        @qnt_pack = Packsearch.where(finished: 'SIM').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).count
        @qnt_air = Airsearch.where(finished: 'SIM').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).count
-       @qnt_rodo = Rodosearch.where(finished: 'SIM').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).count
+       #@qnt_rodo = Rodosearch.where(finished: 'SIM').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).count
     end
 
   end
@@ -223,8 +232,8 @@ class PagesController < ApplicationController
     @total_air = Airsearch.where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
     @total_air_sale = Airsearch.where(finished: 'SIM').where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
 
-    @total_rodo = Rodosearch.where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
-    @total_rodo_sale = Rodosearch.where(finished: 'SIM').where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
+    #@total_rodo = Rodosearch.where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
+    #@total_rodo_sale = Rodosearch.where(finished: 'SIM').where("created_at::Date between ? and ?",params[:date1],params[:date2]).count
     end
     
   end
@@ -252,9 +261,9 @@ class PagesController < ApplicationController
       @airsearch = Airsearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).order(:updated_at)
       @total_airsearch = Airsearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).sum(:cotation_value)
       
-      @rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).order(:updated_at)
-      @total_rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).sum(:cotation_value)
-
+     # @rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).order(:updated_at)
+     # @total_rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date ?",Date.today).sum(:cotation_value)
+     @total_rodosearch = 0
       
       @total_geral = @total_meeting.to_f + @total_packsearch.to_f + @total_airsearch.to_f + @total_rodosearch.to_f
       @total_geral = @total_geral.round(2)
@@ -271,9 +280,9 @@ class PagesController < ApplicationController
       @airsearch = Airsearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
       @total_airsearch = Airsearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
       
-      @rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
-      @total_rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
-
+      #@rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
+      #@total_rodosearch = Rodosearch.where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
+      @total_rodosearch = 0
       
       @total_geral = @total_meeting.to_f + @total_packsearch.to_f + @total_airsearch.to_f + @total_rodosearch.to_f 
       @total_geral = @total_geral.round(2)  
@@ -290,9 +299,9 @@ class PagesController < ApplicationController
       @airsearch = Airsearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
       @total_airsearch = Airsearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
       
-      @rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
-      @total_rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
-
+      #@rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).order(:updated_at)
+      #@total_rodosearch = Rodosearch.where(user: params[:seller]).where(status: 'COMPROU').where("updated_at::Date between ? and ?",params[:date1],params[:date2]).sum(:cotation_value)
+      @total_rodosearch = 0
       
       @total_geral = @total_meeting.to_f + @total_packsearch.to_f + @total_airsearch.to_f + @total_rodosearch.to_f
       @total_geral = @total_geral.round(2)

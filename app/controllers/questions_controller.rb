@@ -12,12 +12,13 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @show_category = Category.order(:name)
+    #INSERI AQUI UM FILTRO PARA TIRAR O TRANSPORTE RODOVIÁRIO
+    @show_category = Category.where('name != ?', 'Transporte Rodoviário').order(:name)
     
     if params[:category].present?
     @questions = Question.includes(:category).where('questions.category_id = ?', params[:category]).order('questions.description')    
     else 
-    @questions = Question.includes(:category).order('updated_at DESC')  
+    @questions = Question.includes(:category).where('questions.category_id != ?', 2).order('updated_at DESC')  
     end
 
   end

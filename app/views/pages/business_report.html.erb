@@ -42,9 +42,11 @@
   <hr />
   <font color="#34495e">Total Transporte Aéreo <b><%= @total_air %></b></font><br />
   <font color="#34495e">Total Vendas efetivadas <b><%= @total_air_sale %></b></font>
+  <!--
   <hr />
   <font color="#34495e">Total Transporte Rodoviário <b><%= @total_rodo %></b></font><br />
   <font color="#34495e">Total Vendas efetivadas <b><%= @total_rodo_sale %></b></font>
+  -->
  </div>
  <% else %>
  <font color="#34495e"><b>Aviso:</b> Informe o periodo desejado para saber os totais de pesquisas e vendas efetivadas.</font><br /> 
@@ -64,10 +66,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>
   <%= pie_chart Airsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('airsearches.user').count %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>
   <%= pie_chart Rodosearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('rodosearches.user').count %>
- 
+  -->
   <% else %>
   
   <font color="#34495e">Agendamentos</font>
@@ -78,10 +81,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>
   <%= pie_chart Airsearch.where("created_at::date = ?", Date.today).group('airsearches.user').count %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>
   <%= pie_chart Rodosearch.where("created_at::date = ?", Date.today).group('rodosearches.user').count %>
-  
+  -->
    <% end %>
   </h5>
   </div>
@@ -99,10 +103,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>
   <%= pie_chart Airsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('airsearches.type_client').count %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>
   <%= pie_chart Rodosearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('rodosearches.type_client').count %>
-   
+  -->
   <% else %>
   
   <font color="#34495e">Agendamentos</font>
@@ -113,10 +118,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>
   <%= pie_chart Airsearch.where("created_at::date = ?", Date.today).group('airsearches.type_client').count %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>
   <%= pie_chart Rodosearch.where("created_at::date = ?", Date.today).group('rodosearches.type_client').count %>
-
+-->
   <% end %>
  </h5>
 </div>
@@ -134,10 +140,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>		
   <%= bar_chart Airsearch.order('airsearches.user').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('airsearches.user').sum("airsearches.cotation_value") %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>		
   <%= bar_chart Rodosearch.order('rodosearches.user').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('rodosearches.user').sum("rodosearches.cotation_value") %>
-    
+   --> 
   <% else %>
   
    <font color="#34495e">Agendamentos</font>
@@ -148,10 +155,11 @@
   <hr />
   <font color="#34495e">Transporte Aéreo</font>		
   <%= bar_chart Airsearch.order('airsearches.user').where("updated_at::date = ?", Date.today).where('finished = ?', 'SIM').group('airsearches.user').sum("airsearches.cotation_value") %>
+  <!--
   <hr />
   <font color="#34495e">Transporte Rodoviário</font>		
   <%= bar_chart Rodosearch.order('rodosearches.user').where("updated_at::date = ?", Date.today).where('finished = ?', 'SIM').group('rodosearches.user').sum("rodosearches.cotation_value") %>
-
+-->
   <% end %>
  </h5>
 </div>
