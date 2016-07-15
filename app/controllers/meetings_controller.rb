@@ -108,7 +108,7 @@ class MeetingsController < ApplicationController
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário
@@ -204,7 +204,7 @@ class MeetingsController < ApplicationController
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário
@@ -259,13 +259,9 @@ class MeetingsController < ApplicationController
         #calcula o percentual já vendido
         @current_goal = (@total_research.to_f / current_user.goal.to_f) * 100
         @current_goal = @current_goal.round(2)
-        #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
-          puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
-        else
-        #atualiza os dados de meta mensal do usuário
+                #atualiza os dados de meta mensal do usuário
         User.update(current_user.id, qnt_research: @total_qnt.to_i, total_sale: @total_research, current_percent: @current_goal.to_f)
-        end
+        
         #calculando o total de agendamentos do dia
         t_qnt = Meeting.where(start_time: Date.today).where(status: 'EM ANDAMENTO').count
         #calcula o total geral vendido e atualiza o já vendido do ADMINISTRADOR 
@@ -284,7 +280,7 @@ class MeetingsController < ApplicationController
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário

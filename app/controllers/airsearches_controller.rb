@@ -65,7 +65,7 @@ class AirsearchesController < ApplicationController
         c_goal = c_goal.round(2)
         
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário
@@ -145,7 +145,7 @@ class AirsearchesController < ApplicationController
         c_goal = c_goal.round(2)
         
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         
@@ -386,7 +386,7 @@ class AirsearchesController < ApplicationController
         c_goal = c_goal.round(2)
         
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário
@@ -617,7 +617,7 @@ class AirsearchesController < ApplicationController
         c_goal = c_goal.round(2)
         
         #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
-        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+        if goal_admin.goal.blank? || goal_admin.goal.nil?
           puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
         else
         #atualiza os dados de meta mensal do usuário
