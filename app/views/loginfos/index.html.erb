@@ -1,0 +1,52 @@
+<%- model_class = Loginfo -%>
+  <h1>Log de Atividades <%= image_tag 'log.png' %></h1>
+    <h5>Pesquisar por data:</h5>
+<%= form_tag(loginfos_path, method: :get) do %>
+
+		<div class="form-group">			  
+		<div class="row">
+		<div class="col-lg-3">
+		<%= select_tag(:seller, options_from_collection_for_select(@users, "name", "name", :selected => params[:seller]), include_blank: 'Selecione o Usuário', class: 'form-control', id: 'printbtn')%>			  	
+		</div>
+		</div>
+		
+		<div class="form-group">			  
+		<div class="row">
+		<div class="col-lg-2">
+		<%= date_field_tag(:date1,params[:date1], placeholder: 'data inicial', class: 'form-control') %>
+		</div>
+		</div>
+		<div class="form-group">			  
+		<div class="row">
+		<div class="col-lg-2">
+		<%= date_field_tag(:date2,params[:date2], placeholder: 'data final', class: 'form-control') %>	
+		</div>
+		</div>
+		<br />	
+		<%= submit_tag "Consultar", class: 'btn btn-success' %>
+<% end %>
+
+<% if @logs.present? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name('usuário') %></th>
+      <th><%= model_class.human_attribute_name('tarefa') %></th>
+      <th><%= model_class.human_attribute_name('realizado em') %></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <% @logs.each do |f| %>
+      <tr>
+      	<td><%= f.employee %></td>
+        <td><%= f.task %></td>
+        <td><%= f.created_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<p>
+<h4 class="jumbotron">Não existem dados com base nos parametros informados.</h4>
+<% end %>

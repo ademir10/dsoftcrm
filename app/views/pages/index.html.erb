@@ -1,0 +1,39 @@
+<html>
+<body background="">
+
+ <div class="jumbotron">
+
+<% if !logged_in? %>
+     	    	
+    <div style="background: url('images/banner1.jpg')no-repeat center; height: 400px;
+    background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    color: #FFF;" class="jumbotron">
+    
+     
+    </div>
+    <div class="container">
+   		<p><a class="btn btn-primary btn-lg pull-right" href="http://www.ddti.com.br" role="button">Nosso site &raquo;</a></p>
+      </div>
+
+<% else %> 
+<div class="container" align="center">
+<%= image_tag "logo_mini.png" %>
+
+<div class="container">
+<% @categories.each do |f| %>
+<% if f.link != nil %>
+<%= link_to f.name, f.link, class: 'btn btn-default btn-lg' %>
+<% end %>
+<% end %>
+</div>
+
+  </div>
+<% end %> 
+
+
+</div>
+</body>
+</html>

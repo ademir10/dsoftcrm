@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cellphone: 
+  start_time: 2016-04-12 22:51:35
+  clerk_id: 1
+  research_path: MyString
+  research_id: 1
+
+two:
+  name: MyString
+  cellphone: 
+  start_time: 2016-04-12 22:51:35
+  clerk_id: 1
+  research_path: MyString
+  research_id: 1

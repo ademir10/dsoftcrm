@@ -1,0 +1,45 @@
+<%= form_for @question, :html => { :class => "form-horizontal question" } do |f| %>
+
+  <% if @question.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @question.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label 'Categoria', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+     <% if @question.category_id.present? %>	
+      <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: 'Selecione a categoria'}, disabled: true ,:class => 'form-control') %>
+     <% else %>
+      <%= f.collection_select(:category_id, @categories, :id, :name, {include_blank: 'Selecione a categoria'}, :class => 'form-control') %>
+     <% end %>
+    </div>
+    <%=f.error_span(:category_id) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Descrição da pergunta', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :description, :class => 'form-control', placeholder: 'Descreva aqui qual será a pergunta...' %>
+    </div>
+    <%=f.error_span(:description) %>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit 'Salvar', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                questions_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

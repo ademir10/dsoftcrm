@@ -1,0 +1,101 @@
+<%= form_for @meeting, :html => { :class => "form-horizontal meeting" } do |f| %>
+
+  <% if @meeting.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@meeting.errors.count, "error") %> prohibited this meeting from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @meeting.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if @meeting.clerk_name.present? %>
+    <div class="form-group">
+    <%= f.label 'Trocar Atendente', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+    
+       <%= f.collection_select(:clerk_name, @users, :name, :name, {include_blank: 'Selecione o atendente'}, :class => 'form-control') %>
+
+          </div>
+    <%=f.error_span(:clerk_name) %>
+  </div>
+  <% end %>	
+
+  <div class="form-group">
+    <%= f.label 'nome', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+      <%= f.text_field :client, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:client) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'celular', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+      <%= f.text_field :phone, :class => 'form-control', id: 'celphone' %>
+    </div>
+    <%=f.error_span(:phone) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'valor cotado', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-2">
+      <%= f.text_field :cotation_value, :class => 'form-control', id: 'real' %>
+    </div>
+    <%=f.error_span(:cotation_value) %>
+  </div>
+  
+    <div class="form-group">
+    <%= f.label 'status', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-2">
+      <%= f.select(:status, options_for_select([["COMPROU"], ["EM ANDAMENTO"]], @meeting.status), {include_blank: 'Selecione'}, :class => 'form-control') %>
+
+    </div>
+    <%=f.error_span(:status) %>
+  </div>
+  
+    <div class="form-group">
+    <%= f.label 'tipo de cliente', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-2">
+      <%= f.select(:type_client, options_for_select([["FRIO"], ["MORNO"], ["QUENTE"]], @meeting.type_client), {include_blank: 'Selecione'}, :class => 'form-control') %>
+
+    </div>
+    <%=f.error_span(:type_client) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'Próximo contato?', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+      <%= f.date_field :start_time, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:start_time) %>
+  </div>
+  
+    <% if @meeting.clerk_name.blank? %>
+      <%= f.hidden_field :clerk_id, :value => current_user.id %>
+      <%= f.hidden_field :clerk_name, :value => current_user.name %>
+    <% end %>
+      
+   <div class="form-group">
+    <%= f.label 'Observações', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :obs, cols: 5, rows: 5, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:obs) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit 'Salvar', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                meetings_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

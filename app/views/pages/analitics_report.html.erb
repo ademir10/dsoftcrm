@@ -1,0 +1,200 @@
+<!-- CSS PARA REMOVER O BOTÃO IMPRIMIR E APARECER OS DADOS DO CABEÇALHO SÓ NA IMPRESSÃO NA VIEW DE IMPRESSÃO -->
+  <style type="text/css">
+	@media print {
+    #printbtn {
+        display :  none;
+    }
+}
+
+#printOnly {
+   display : none;
+}
+
+@media print {
+    #printOnly {
+       display : block;
+    }
+}
+</style>
+
+<h1>Relatório análitico de vendas <%= image_tag 'analitic_report.png' %></h1>
+ <% if params[:date1].present? && params[:date2].present? %>
+ <div id="printOnly">
+ <%if params[:seller].present? %>	
+ <h4>Vendedor: <%= params[:seller] %></h4>
+ <% end %>
+ <h4>Periodo: <%= params[:date1].to_date %> até <%= params[:date2].to_date %></h4>
+ </div>
+ <% end %>
+
+ <%= form_tag(analitics_report_path, method: :get) do %>
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-3">		
+		<%= select_tag(:seller, options_from_collection_for_select(@users, "name", "name", :selected => params[:seller]), include_blank: 'Selecione o Atendente', class: 'form-control', id: 'printbtn')%>			  	
+		  	  </div>
+		</div>
+ 
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date1,params[:date1], placeholder: 'data inicial', class: 'form-control', id: 'printbtn') %>
+		</div>
+		</div>
+
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date2,params[:date2], placeholder: 'data final', class: 'form-control', id: 'printbtn') %>	
+		</div>
+		</div>
+	</div>	
+<%= submit_tag "Consultar", class: 'btn btn-success', id: 'printbtn' %>
+<% end %>
+<button type="button" id ="printbtn" class="btn btn-success", onclick ="window.print();return false;">Imprimir</button>
+
+<p />
+<% if @meeting.present? %>
+<div class="panel panel-default">
+  <div class="panel-heading" >Agendamentos - Total vendido R$: <b><%= @total_meeting %></b></div>
+  <h5 class="panel-body">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th> <%= 'cliente' %></th>
+      <th><%= 'fone' %></th>
+      <th><%= 'valor cotado R$' %></th>
+      <th><%= 'atendente' %></th>
+      <th><%= 'vendido em' %></th>
+                
+    </tr>
+  </thead>
+  <tbody>
+ 
+ 	<% @meeting.each do |f| %>
+ 	    <tr>
+        <td><%= f.client %></td>
+        <td><%= f.phone %></td>
+        <td><%= f.cotation_value %></td>
+        <td><%= f.clerk_name %></td>
+        <td><%= f.updated_at.strftime("%d/%m/%Y") %></td>
+      </tr>
+      <% end %>
+       </tbody>
+       
+   </table>
+  </h5>
+</div>
+</div>
+<% end %>
+
+<% if @packsearch.present? %>
+<div class="panel panel-default">
+  <div class="panel-heading" >Pacotes de Viagem - Total vendido R$: <b><%= @total_packsearch %></b></div>
+  <h5 class="panel-body">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th> <%= 'cliente' %></th>
+      <th><%= 'fone' %></th>
+      <th><%= 'valor cotado R$' %></th>
+      <th><%= 'atendente' %></th>
+      <th><%= 'vendido em' %></th>
+                
+    </tr>
+  </thead>
+  <tbody>
+ 
+ 	<% @packsearch.each do |f| %>
+ 	    <tr>
+        <td><%= f.client %></td>
+        <td><%= f.phone %></td>
+        <td><%= f.cotation_value %></td>
+        <td><%= f.user %></td>
+        <td><%= f.updated_at.strftime("%d/%m/%Y") %></td>
+      </tr>
+      <% end %>
+       </tbody>
+       
+   </table>
+  </h5>
+</div>
+</div>
+
+<% end %>
+
+<% if @airsearch.present? %>
+<div class="panel panel-default">
+  <div class="panel-heading" >Transportes Aéreos - Total vendido R$: <b><%= @total_airsearch %></b></div>
+  <h5 class="panel-body">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th> <%= 'cliente' %></th>
+      <th><%= 'fone' %></th>
+      <th><%= 'valor cotado R$' %></th>
+      <th><%= 'atendente' %></th>
+      <th><%= 'vendido em' %></th>
+                
+    </tr>
+  </thead>
+  <tbody>
+ 
+ 	<% @airsearch.each do |f| %>
+ 	    <tr>
+        <td><%= f.client %></td>
+        <td><%= f.phone %></td>
+        <td><%= f.cotation_value %></td>
+        <td><%= f.user %></td>
+        <td><%= f.updated_at.strftime("%d/%m/%Y") %></td>
+      </tr>
+      <% end %>
+       </tbody>
+       
+   </table>
+  </h5>
+</div>
+<% end %>
+
+<% if @rodosearch.present? %>
+<div class="panel panel-default">
+  <div class="panel-heading" >Transportes Rodoviários - Total vendido R$: <b><%= @total_rodosearch %></b></div>
+  <h5 class="panel-body">
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th> <%= 'cliente' %></th>
+      <th><%= 'fone' %></th>
+      <th><%= 'valor cotado R$' %></th>
+      <th><%= 'atendente' %></th>
+      <th><%= 'vendido em' %></th>
+                
+    </tr>
+  </thead>
+  <tbody>
+ 
+ 	<% @rodosearch.each do |f| %>
+ 	    <tr>
+        <td><%= f.client %></td>
+        <td><%= f.phone %></td>
+        <td><%= f.cotation_value %></td>
+        <td><%= f.user %></td>
+        <td><%= f.updated_at.strftime("%d/%m/%Y") %></td>
+      </tr>
+      <% end %>
+       </tbody>
+       
+   </table>
+  </h5>
+</div>
+<% end %>
+
+<% if @meeting.blank? && @packsearch.blank? && @airsearch.blank? && @rodosearch.blank? %>
+<h4 class="jumbotron">Não existem dados com base nos parametros informados.</h4>
+<% else %>
+<h2 class="panel-body">Total Geral vendido R$: <strong><%= @total_geral %></strong></h2>
+<% end %>
+
+</div>    	
+
+

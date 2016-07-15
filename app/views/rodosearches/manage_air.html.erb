@@ -1,0 +1,95 @@
+<h1>Gerenciamento de Pesquisa - Transporte Rodoviário</h1>
+
+<h3>Dados do cliente</h3>
+
+  <dl class="dl-horizontal">
+  <h4><strong>Nome:</strong>&nbsp;<%= @result.client %><br />
+  <strong>Celular:</strong>&nbsp;<%= @result.phone %></h4>
+  </dl>
+  <hr />
+    
+  <%= form_for(@result, :html => { :class => "form-horizontal invoice" }, url: update_status_air_rodosearch_path, method: :post) do |f| %>
+  
+	  <% if @result.errors.any? %>
+	    <div id="error_expl" class="panel panel-danger">
+	      <div class="panel-heading">
+	        <h3 class="panel-title"><%= pluralize(@result.errors.count, "error") %> prohibited this heritage from being saved:</h3>
+	      </div>
+	      <div class="panel-body">
+	        <ul>
+	        <% @result.errors.full_messages.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	        </ul>
+	      </div>
+	    </div>
+	  <% end %>
+	  
+	  <%= f.hidden_field :id, :value => @result.id %>
+	  
+   <div class="form-group">
+    <%= f.label 'Valor cotado R$', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-2">
+      <%= f.text_field :cotation_value, :class => 'form-control', id: 'real' %>
+    </div>
+    <%=f.error_span(:cotation_value) %>
+  </div>  
+  
+  <div class="form-group">
+    <%= f.label 'Status', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+      <%= f.select(:status, options_for_select([["COMPROU"], ["EM ANDAMENTO"]], @result.status), {include_blank: 'Selecione o Status'}, :class => 'form-control') %>
+    </div>
+    <%=f.error_span(:status) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'Motivo', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+      <%= f.select(:reason, options_for_select([["PROBLEMA FINANCEIRO"], ["PROBLEMA COM DATA"],["LIMITAÇÃO PSICOLÓGICA"]], @result.reason), {include_blank: 'Selecione o Motivo'}, :class => 'form-control') %>
+    </div>
+    <%=f.error_span(:reason) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'Dores', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :pains, cols: 5, rows: 5, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:pains) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'Tratativas aplicadas', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :solution_applied, cols: 5, rows: 5, :class => 'form-control', placeholder: 'Atenção: Como você apagou todas as tratativas aplicadas, Clique em salvar e selecione novas tratativas para atualizar este campo.' %>
+    </div>
+    <%=f.error_span(:solution_applied) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'Próximo contato?', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+     <%= f.date_field :schedule, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:schedule) %>
+  </div>
+      
+  <div class="form-group">
+    <%= f.label 'Observações', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :obs, cols: 5, rows: 5, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:obs) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+  <%= link_to 'Voltar', rodosearches_path ,class: 'btn btn-default' %>
+  <%= f.submit 'Salvar', class: 'btn btn-primary' %>
+  
+  </div>
+  </div>
+  <% end %>
+ 
+  

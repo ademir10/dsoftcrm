@@ -1,0 +1,25 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th> <%= 'Descrição da resposta' %></th>
+      <th> <%= 'Score' %></th>
+     
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      
+    </tr>
+  </thead>
+  <tbody>
+ 
+ 	<% @question.answers.each do |answer| %>
+        <tr>
+        <td><%= answer.description %></td>
+        <td><%= answer.score %></td>
+        <td><%= link_to 'adicionar tratativa', new_solution_path(:id_answer => answer, :category => @question.category.name), :class => 'btn btn-xs btn-success' %>
+        <%= link_to "Editar resposta", edit_answer_path(:id_answer => answer), :class => 'btn btn-default btn-xs' %>
+        </tr>
+      <% end %>
+       </tbody>
+       
+   </table>
+
+

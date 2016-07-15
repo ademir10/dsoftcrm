@@ -1,0 +1,28 @@
+<%- model_class = Meeting -%>
+<div class="page-header">
+  <h1>Agendamento <%= @meeting.start_time %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <h4><dt><strong><%= model_class.human_attribute_name('nome') %>:</strong></dt>
+  <dd><%= @meeting.client %></dd>
+  <dt><strong><%= model_class.human_attribute_name('celular') %>:</strong></dt>
+  <dd><%= @meeting.phone %></dd>
+  <% if @meeting.cotation_value.present? %>
+  <dt><strong><%= model_class.human_attribute_name('valor R$') %>:</strong></dt>
+  <dd><%= @meeting.cotation_value %></dd></h4>
+  <% end %>
+</dl>
+
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              meetings_path, :class => 'btn btn-default'  %>
+<%= link_to "Anexos", documents_path(:id => @meeting, :request => 'meetings'), class: 'btn btn-default', id: 'hide_buttom' %>	
+
+<%= link_to 'Gerenciamento', edit_meeting_path(@meeting), :class => 'btn btn-primary' %>
+              
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              meeting_path(@meeting, :request=> 'meetings'),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

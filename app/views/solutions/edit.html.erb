@@ -1,0 +1,8 @@
+<%- model_class = Solution -%>
+<div class="page-header">
+  <h1>Editar conselho</h1>
+  <h4>Categoria: <font color="red"><%= @solution.category_name %></font></h4>
+  <h4>Para a resposta: <font color="red"><%= @answer.description %></font></h4>
+  
+</div>
+<%= render :partial => 'form' %>

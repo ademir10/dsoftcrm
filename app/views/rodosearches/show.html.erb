@@ -1,0 +1,151 @@
+<!-- CSS PARA REMOVER O BOTÃO IMPRIMIR NA VIEW E FAZER O INVERSO NAS RESPOSTAS DE IMPRESSÃO -->
+  <style type="text/css">
+	@media print {
+    #hide_buttom {
+        display :  none;
+    }
+}
+
+#printOnly {
+   display : none;
+}
+
+@media print {
+    #printOnly {
+       display : block;
+    }
+}
+</style>
+
+<!-- INSERI ESSA VERIFICAÇÃO DE AMBIENTE PRA CARREGAR OS PDF'S TANTO LOCALMENTE QUANTO NO HEROKU -->
+<% if Rails.env.development? %>
+  <style type="text/css">
+    <%= Rails.application.assets.find_asset('application.css').to_s.html_safe %>
+</style>
+<% end %>
+
+<%- model_class = Rodosearch -%>
+
+<%= image_tag "logo_rpt.png",id: 'printOnly' %>
+
+<div class="page-header">
+<h1>Dados da Pesquisa - Transporte Rodoviário</h1>
+</div>
+
+<dl class="dl-horizonta l">
+  <h4><strong><%= model_class.human_attribute_name('cliente') %>:</strong>&nbsp;<%= @rodosearch.client %><br />
+  <strong><%= model_class.human_attribute_name('celular') %>:</strong>&nbsp;<%= @rodosearch.phone %>
+  <% if @rodosearch.cotation_value.present? %>
+  <br /><strong><%= model_class.human_attribute_name('Valor cotado R$') %>:</strong>&nbsp;<%= @rodosearch.cotation_value %></h4>
+  <% end %></h4>
+  <hr />
+
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              rodosearch_path(@rodosearch),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger', id: 'hide_buttom' %>
+<button type="button" id ="hide_buttom" class="btn btn-success", onclick ="window.print();return false;">Imprimir</button>
+              
+<h2>Resultado: <%= @total_score %> pontos</h2>
+  
+  <% if @rodosearch.type_client == 'FRIO' %>
+  <div class="panel panel-danger">
+  <div class="panel-heading" >CLIENTE FRIO - TRATATIVAS SUGERIDAS </div>
+  
+  <% elsif @rodosearch.type_client == 'MORNO' %>
+  <div class="panel panel-warning">
+  <div class="panel-heading">CLIENTE MORNO - TRATATIVAS SUGERIDAS </div>
+  
+  <% elsif @rodosearch.type_client == 'QUENTE' %>
+  <div class="panel panel-success">
+  <div class="panel-heading">CLIENTE QUENTE - TRATATIVAS SUGERIDAS </div>
+  <% end %>
+  <div class="panel-body">
+    	
+  <%= form_tag(manage_air_rodosearch_path, method: :get) do %>
+  
+  <%= hidden_field_tag :air_id, @rodosearch.id %>
+ 	
+    <font color="black"><% if @show_solution1.present? %>
+    <h5><%= check_box_tag :t1, @show_solution1.description %> <%= @show_solution1.description %></h5>
+    <% end %>
+     
+    <% if @show_solution2.present? %>
+  	<h5><%= check_box_tag :t2, @show_solution2.description %> <%= @show_solution2.description %></h5>
+  	<% end %>
+  	<% if @show_solution3.present? %>
+  	<h5><%= check_box_tag :t3, @show_solution3.description %> <%= @show_solution3.description %></h5>
+  	<% end %>
+  	<% if @show_solution4.present? %>
+    <h5><%= check_box_tag :t4, @show_solution4.description %> <%= @show_solution4.description %></h5>
+    <% end %>
+    <% if @show_solution5.present? %>
+  	<h5><%= check_box_tag :t5, @show_solution5.description %> <%= @show_solution5.description %></h5>
+  	<% end %>
+  	<% if @show_solution6.present? %>
+  	<h5><%= check_box_tag :t6, @show_solution6.description %> <%= @show_solution6.description %></h5>
+  	<% end %>
+  	  	
+  	<%= link_to t('.back', :default => t("helpers.links.back")),
+              rodosearches_path, :class => 'btn btn-default', id: 'hide_buttom' %>
+    
+    <% if @rodosearch.schedule.present? %>  
+    <%= link_to 'Editar pesquisa', edit_rodosearch_path(@rodosearch), :class => 'btn btn-default', id: 'hide_buttom' %>
+    <% end %>
+    <%= link_to "Anexos", documents_path(:id => @rodosearch, :request => 'rodosearches'), class: 'btn btn-default', id: 'hide_buttom' %>	
+
+    <%= submit_tag "Gerenciamento", class: 'btn btn-primary', id: 'hide_buttom' %>    
+<% end %>  
+ </font>
+  </div>
+  </div>
+  
+  <% if @rodosearch.pains.present? %>
+  <div class="panel panel-default">
+  <div class="panel-heading" >DORES </div>
+  <div class="panel-body">
+  <%= simple_format(@rodosearch.pains, :class => 'h4') %>
+  </div>
+  </div>
+  <% end %>
+  <% if @rodosearch.solution_applied.present? %>
+  <div class="panel panel-default">
+  <div class="panel-heading" >TRATATIVAS APLICADAS </div>
+  <div class="panel-body">
+  <%= simple_format(@rodosearch.solution_applied, :class => 'h4') %>
+  </div>
+  </div>
+  <% end %>  
+  <% if @rodosearch.obs.present? %>
+  <div class="panel panel-default">
+  <div class="panel-heading" >OBSERVAÇÕES </div>
+  <div class="panel-body">
+  <%= simple_format(@rodosearch.obs, :class => 'h4') %>
+  </div>
+  </div>
+ <% end %>
+ 
+<div id="printOnly"> 
+ <div class="panel panel-default">
+  <div class="panel-heading">RESPOSTAS </div>
+  <div class="panel-body">
+  <h5 class="form-group"><strong><%= @question1.description %>:</strong>&nbsp; <%= @q1.description %><br />
+  </h5>
+  <h5 class="form-group"><strong><%= @question2.description %>:</strong>&nbsp; <%= @q2.description %><br />
+  </h5>
+  <h5 class="form-group"><strong><%= @question3.description %>:</strong>&nbsp; <%= @q3.description %><br />
+  </h5>
+  <h5 class="form-group"><strong><%= @question4.description %>:</strong>&nbsp; <%= @q4.description %><br />
+  </h5>
+  <h5 class="form-group"><strong><%= @question5.description %>:</strong>&nbsp; <%= @q5.description %><br />
+  </h5>
+  <h5 class="form-group"><strong><%= @question6.description %>:</strong>&nbsp; <%= @q6.description %><br />
+  </h5>
+  </div>
+  </div>
+  </div>
+   </div>
+  </dl>
+  
+  

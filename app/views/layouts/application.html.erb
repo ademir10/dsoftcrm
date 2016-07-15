@@ -1,0 +1,338 @@
+<!-- CSS PARA REMOVER O BOTÃO IMPRIMIR NA VIEW DE IMPRESSÃO -->
+  <style type="text/css">
+	@media print {
+    #hide_navbar {
+        display :  none;
+    }
+
+}
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Desenvolvido por D&D Support service - Consultoria em T.I">
+    <meta name="author" content="D&D Support Service - Consultoria em T.I and God ever!!!">
+    <link rel="icon" href="../../images/favicon.ico">
+    
+    <meta content='<%= logged_in? ? current_user.id : "" %>' name='user-id'/>
+    <%= stylesheet_link_tag '//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css' %>
+    
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
+	<%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
+	
+	<%= stylesheet_link_tag    'bootstrap.min', media: 'all', 'data-turbolinks-track' => true %>
+	
+	<!-- COMENTEI ESSE CSS PQ MUDA OS BOTÕES 
+	<%= stylesheet_link_tag    'bootstrap-reset', media: 'all', 'data-turbolinks-track' => true %>
+	-->
+	<%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track' => true %>
+    
+    <!-- start:style for this page -->
+    <!--<link href="plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet">-->
+	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="cl-default fixed" >
+
+    <!-- start:navbar top -->
+    <header class="header" id="hide_navbar">
+        <a href="#" class="logo" >
+            <%= image_tag "logo.png" %> DsoftWeb
+        </a>
+        
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="navbar-btn sidebar-toggle" data-target="#atas" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+
+              <!-- INICIO DO MENU SUPERIOR -->
+               
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav" >
+                  	
+		            <% if !logged_in? %>
+		                   
+			       	<li><%= link_to "Home", root_path %></li>
+				    <li><%= link_to "Contato", contact_path %></li>
+			        
+				        <%= form_tag('/login', class: "navbar-form navbar-right") do %>
+						<div class="form-group">
+						<%= text_field_tag :email, nil, placeholder: 'Email', class: 'form-control' %>	
+						</div>
+						<div class="form-group">
+						<%= password_field_tag :password, nil, placeholder: 'Senha', class: 'form-control' %>
+						</div>
+						<%= submit_tag "Login", class: 'btn btn-success' %>&nbsp;&nbsp;
+						<% end %> 
+						
+						      
+               </ul>     	
+			</div>
+               </nav>
+    </header>
+    <!-- end:navbar top -->
+    
+   
+            <section class="content" >
+
+                <!-- start:content -->
+                <div class="row">
+                    <div class="col-lg-12">
+      	
+        <% flash.each do |type, message|%>
+        <br />
+        <br />
+		<div class="alert alert-<%= type %>"><%= message %></div>
+    	<% end %>
+
+          <%= yield %>
+        </div>
+                <!-- end:content -->
+            </section>
+
+
+    <!-- SE ESTIVER LOGADO -->   
+    <% else %> 
+  
+     <li class="dropdown">
+       <br>
+       <strong><%= link_to image_tag("chat_icon.ico" ,class: "img-circle img-responsive img-user"), messengers_path %></strong>
+    </li>
+   
+                  </ul>     	
+			</div>
+               </nav>
+    </header>
+    <!-- end:navbar top -->
+              
+	<!-- start:wrapper body -->
+    <div class="wrapper row-offcanvas row-offcanvas-left" >
+        <!-- start:left sidebar -->
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist" id="hide_navbar">
+                        <li class="active"><a href="#user" role="tab" data-toggle="tab"><i class="fa fa-users"></i></a></li>
+                        <li><a href="#notif" role="tab" data-toggle="tab"><i class="fa fa-bullhorn"></i></a></li>
+                        <li><a href="#profile" role="tab" data-toggle="tab"><i class="fa fa-cog"></i></a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content" id="hide_navbar">
+                        <div class="tab-pane active" id="user">
+                            <div class="image">
+                                
+                                <%= image_tag "micrologo.png", class: "img-circle" %>
+                            </div>
+                            <div class="info">
+                                <p>Oi <%= current_user.name %></p>
+                                <small style="color: #eee;">welcome!</small>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="notif">
+                            <ul class="menu">
+                                <li><!-- start message -->
+                                    <a href="#">
+                                        <div class="pull-left">
+                                            <%= image_tag "microresearch.png", class: "img-circle" %>
+                                        </div>
+                                        <p>
+                                            Agendamentos hoje<br>
+                                            <small><i class="fa fa-clock-o"></i> <%= current_user.qnt_research %> total</small>
+                                        </p>
+                                    </a>
+                                </li><!-- end message -->
+                                
+                            </ul>
+                        </div>
+                        <div class="tab-pane" id="profile">
+                            <div class="text-center profile">
+                                <p>Meta mensal R$ <%= current_user.goal %></p>
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active"  role="progressbar" aria-valuenow=<%= current_user.current_percent %> aria-valuemin="0" aria-valuemax= '100%' style="width: <%= current_user.current_percent %>%">
+                                    </div>
+                                </div>
+                                <% if current_user.current_percent.to_f < 100 %>
+                                <p>Jà vendido R$ <a href="#"><%= current_user.total_sale %></a></p>
+                                <% else %>
+                                <p>PARABÉNS <a href="#">META BATIDA!</a></p>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" id="hide_navbar">
+                	<li class="treeview">
+                        <a href="#">
+ 							<i class="fa fa-dashboard"></i>
+                            <span>Dashboard</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                        <% if current_user.rbusiness == true %>	
+		                	<li><%= link_to "Análise geral de pesquisas", business_report_path %></li>
+		                <% end %>
+		                <% if current_user.rmark == true %>	
+		                	<li><%= link_to "Análise gráfica de marketing", marketing_report_path %></li>
+		                <% end %>
+		                <% if current_user.rsales == true %>	
+		                	<li><%= link_to "Análise gráfica anual de vendas", sales_report_path %></li>
+		                <% end %>
+                        </ul>
+                    </li>
+
+                            
+
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-cog"></i>
+                            <span>Cadastros</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                        <%if current_user.cresearch == true %>
+                			<li><%= link_to 'Pesquisas', root_path %></li>
+                		<% end %>
+                		
+                		<% if current_user.ccategory == true %>	
+		                	<li><%= link_to "Score", categories_path %></li>
+		                <% end %>
+		                
+		                <% if current_user.ccli == true %>	
+		                	<li><%= link_to "Clientes", clients_path %></li>
+		                <% end %>
+		
+		                <%if current_user.cquestion == true %>
+		                	<li><%= link_to 'Perguntas e Respostas', questions_path %></li>
+		                <% end %>
+		                
+		                <% if current_user.cadvice == true %>	
+		                	<li><%= link_to "Conselhos", solutions_path %></li>
+		                <% end %>
+		                                                               
+		                <% if current_user.cuser == true && current_user.type_access == 'User' %>
+		                	<li><%= link_to "Usuários", editar_user_path %></li>
+		                <% elsif current_user.cuser == true && current_user.type_access != 'User' %>
+		                	<li><%= link_to "Usuários", users_path %></li>
+		                <% end %>	
+
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i>
+                            <span>Administração</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                        <% if current_user.mmeeting == true %>	
+		                	<li><%= link_to "Agenda de compromissos", meetings_path %></li>
+		                <% end %>
+		                
+		                <% if current_user.mlog == true %>	
+		                	<li><%= link_to "Log de atividades", loginfos_path %></li>
+		                <% end %>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i>
+                            <span>Relatórios</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                        <% if current_user.ranalitic == true %>	
+		                	<li><%= link_to "Análitico de vendas", analitics_report_path %></li>
+		                <% end %>
+		                <% if current_user.rpen == true %>	
+		                	<li><%= link_to "Pesquisas pendentes", pendencies_report_path %></li>
+		                <% end %>
+                        </ul>
+                    </li>
+                    
+                    <%if current_user.type_access == 'MASTER' %>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-laptop"></i> <span>Utilitários</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><%= link_to "Alterar data de Expiração", expire_dates_path %></li>
+                        </ul>
+                            
+                    </li>
+                     <% end %> 
+                    <li class="treeview">
+                     <%= link_to 'Logout', logout_path, method: :delete, class: "btn btn-primary" %>
+                    </li>                    
+                    
+                </ul>
+                
+            </section>
+        </aside>
+        <!-- end:left sidebar -->
+
+        <!-- start:right sidebar -->
+        <aside class="right-side">
+            <section class="content">
+
+                <!-- start:content -->
+                <div class="row">
+                    <div class="col-lg-12">
+         <div class="container">           	
+        <% flash.each do |type, message|%>
+		<div class="alert alert-<%= type %>"><%= message %></div>
+		 <% end %>
+		 
+          <%= yield %>
+                    </div>  
+         </div> 
+
+                </div>
+                <!-- end:content -->
+            </section>
+            
+        </aside>
+        <!-- end:right sidebar -->
+    </div>
+    <!-- end:wrapper body -->
+      
+
+    <% end %> 
+ 
+    <!-- start:javascript for all pages -->
+	<%= javascript_include_tag 'bootstrap.min', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'arjuna', 'data-turbolinks-track' => true %>
+    <!-- end:javascript for all pages-->
+	
+	
+    <!-- start:javascript for this page -->
+    <%= javascript_include_tag 'demo', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'owl.carousel', 'data-turbolinks-track' => true %>
+	<%= javascript_include_tag 'owl-carousel', 'data-turbolinks-track' => true %>
+    <!-- end:javascript for this page -->	        
+  
+<audio id="chatAudio"><source src="/sounds/notification.mp3" type="audio/mpeg"></audio>
+
+</body>
+</html>

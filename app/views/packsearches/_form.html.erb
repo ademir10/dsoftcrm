@@ -1,0 +1,237 @@
+
+<%= form_for @packsearch, :html => { :class => "form-horizontal packsearch" } do |f| %>
+
+  <% if @packsearch.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@packsearch.errors.count, "error") %> prohibited this packsearch from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @packsearch.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if @packsearch.user.present? %>
+    <div class="form-group">
+    <%= f.label 'Trocar Atendente', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+    
+       <%= f.collection_select(:user, @users, :name, :name, {include_blank: 'Selecione o atendente'},:class => 'form-control') %>
+    
+          </div>
+    <%=f.error_span(:user) %>
+  </div>
+  <% end %>	
+  <div class="form-group">
+    <%= f.label 'Cliente', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+      <%= f.text_field :client, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:client) %>
+  </div>
+  <div class="form-group">
+    <%= f.label 'Celular', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-2">
+      <%= f.text_field :phone, :class => 'form-control', id: 'celphone' %>
+    </div>
+    <%=f.error_span(:phone) %>
+  </div>
+<h4>Questionário</h4>
+ 
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question1.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q1, Answer.where(question_id: @question1.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+ 
+  </div>
+  </div>
+  <%=f.error_span(:q1) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question2.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q2, Answer.where(question_id: @question2.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+  </div>
+  </div>
+  <%=f.error_span(:q2) %>
+  </div>
+
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question3.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q3, Answer.where(question_id: @question3.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q3) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question4.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q4, Answer.where(question_id: @question4.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q4) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question5.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q5, Answer.where(question_id: @question5.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>  </div>
+  </div>
+  <%=f.error_span(:q5) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question6.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q6, Answer.where(question_id: @question6.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q6) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question7.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q7, Answer.where(question_id: @question7.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q7) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question8.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q8, Answer.where(question_id: @question8.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q8) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question9.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q9, Answer.where(question_id: @question9.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q9) %>
+  </div>
+  
+  <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question10.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q10, Answer.where(question_id: @question10.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q10) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question11.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q11, Answer.where(question_id: @question11.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+   </div>
+  </div>
+  <%=f.error_span(:q11) %>
+  </div>
+  
+    <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question12.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q12, Answer.where(question_id: @question12.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q12) %>
+  </div>
+  
+      <div class="form-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">
+                <%= @question13.description %>
+            </h1>
+        </div>
+        <div class="panel-body">
+  <%= f.collection_radio_buttons(:q13, Answer.where(question_id: @question13.id), :id, :description) do |b| b.label { b.radio_button + b.text } + "<div class='group'></div>".html_safe end %>
+    </div>
+  </div>
+  <%=f.error_span(:q13) %>
+  </div>
+  
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit 'Salvar', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                packsearches_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Agenda de compromissos <%= image_tag 'calendar.png' %></h1>
+  
+<% if current_user.type_access != 'USER' %>
+
+<%= form_tag(meetings_path, method: :get) do %>
+<%= check_box_tag :week %>&nbsp;<%= label_tag "Semanal" %>
+ <div class="col-lg-3">	
+  <%= select_tag(:user_id, options_from_collection_for_select(@users, "id", "name"), include_blank: 'Selecione o colaborador', :class => 'form-control')%>			  	
+ </div>
+
+<%= submit_tag "Consultar", class: 'btn btn-success' %> 
+<% end %>		
+<% end %>
+
+</p>
+<% if @week == 'SIM' %>
+<%= week_calendar events: @meetings do |date, meetings| %>
+<%= date %>
+
+  <% meetings.each do |meeting| %>
+    <div>
+    <% if meeting.type_client == 'FRIO' %>	
+      <%= link_to meeting.client, meeting.research_path, {style: "color: red"} %>
+      <% elsif meeting.type_client == 'MORNO' %>
+      <%= link_to meeting.client, meeting.research_path, {style: "color: orange"} %>
+      <% elsif meeting.type_client == 'QUENTE' %>
+      <%= link_to meeting.client, meeting.research_path, {style: "color: green"} %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+<% else %>
+<%= month_calendar events: @meetings do |date, meetings| %>
+<%= date %>
+
+  <% meetings.each do |meeting| %>
+    <div>
+    <% if meeting.type_client == 'FRIO' %>	
+      <%= link_to meeting.client, meeting.research_path, {style: "color: red"} %>
+      <% elsif meeting.type_client == 'MORNO' %>
+      <%= link_to meeting.client, meeting.research_path, {style: "color: orange"} %>
+      <% elsif meeting.type_client == 'QUENTE' %>
+      <%= link_to meeting.client, meeting.research_path, {style: "color: green"} %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<% end %>
+
+
+<br>

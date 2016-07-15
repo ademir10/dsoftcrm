@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="D&D Support Service - Consultoria em T.I and God ever!!!">
+    <link rel="icon" href="../../images/favicon.ico">
+	
+  <title>DsoftWeb - Prepara Mala</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= javascript_include_tag "https://www.google.com/jsapi", "chartkick" %>
+
+
+</head>
+<body>
+
+<!-- AQUI COMEÇA O CABEÇALHO DA APP -->	
+
+    <nav class="navbar navbar-inverse navbar-static-top">
+    
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">DsoftWeb</a>
+          <%= image_tag "logo.png" %>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+        
+        <% if !logged_in? %>
+                   
+       	<li><%= link_to "Home", root_path %></li>
+	    <li><%= link_to "Contato", contact_path %></li>
+        </ul>
+        <%= form_tag('/login', class: "navbar-form navbar-right") do %>
+		<div class="form-group">
+		<%= text_field_tag :email, nil, placeholder: 'Email', class: 'form-control' %>	
+		</div>
+		<div class="form-group">
+		<%= password_field_tag :password, nil, placeholder: 'Senha', class: 'form-control' %>
+		</div>
+		<%= submit_tag "Login", class: 'btn btn-success' %>
+		<% end %>
+            
+        <!-- SE ESTIVER LOGADO -->
+        <% else %>		
+        	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Cadastros <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                	
+                <%if current_user.cresearch == true %>
+                <li><%= link_to 'Pesquisas', root_path %></li>
+                <% end %> 	
+
+                <% if current_user.ccategory == true %>	
+                <li><%= link_to "Score", categories_path %></li>
+                <% end %>
+                
+                <% if current_user.ccli == true %>	
+                <li><%= link_to "Clientes", clients_path %></li>
+                <% end %>
+
+                <%if current_user.cquestion == true %>
+                <li><%= link_to 'Perguntas e Respostas', questions_path %></li>
+                <% end %>
+                
+                <% if current_user.cadvice == true %>	
+                <li><%= link_to "Conselhos", solutions_path %></li>
+                <% end %>
+                                                               
+                <% if current_user.cuser == true && current_user.type_access == 'User' %>
+                <li><%= link_to "Usuários", editar_user_path %></li>
+                <% elsif current_user.cuser == true && current_user.type_access != 'User' %>
+                <li><%= link_to "Usuários", users_path %></li>
+                <% end %>
+                
+               
+				</ul>
+        	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administração <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+
+                <% if current_user.mmeeting == true %>	
+                <li><%= link_to "Agenda de compromissos", meetings_path %></li>
+                <% end %>
+                
+                <% if current_user.mlog == true %>	
+                <li><%= link_to "Log de atividades", loginfos_path %></li>
+                <% end %>
+                	
+                
+                
+                </ul>
+                
+               
+        	
+              
+                      	<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                <li class="dropdown-header">Gerais</li>
+                
+                <% if current_user.ranalitic == true %>	
+                <li><%= link_to "Análitico de vendas", analitics_report_path %></li>
+                <% end %>
+                
+                <% if current_user.rbusiness == true %>	
+                <li><%= link_to "Análise de rendimento", business_report_path %></li>
+                <% end %>
+                
+                
+                                                           
+                <!--
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Movimentações</li>
+                -->               
+                                                                               
+              </ul>
+              
+              <%if current_user.type_access == 'MASTER' %>
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Utilitários <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+              
+                <li><%= link_to "Alterar data de Expiração", expire_dates_path %></li>
+                </ul>
+              <% end %>  
+				<li><%= link_to current_user.email, logout_path, method: :delete %></li>
+        	</ul>
+        	 
+        	
+         <% end %>
+        
+        
+        </li>
+          </ul>
+          
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+        
+<div class="container">
+    	
+    	<% flash.each do |type, message|%>
+		<div class="alert alert-<%= type %>"><%= message %></div>
+		 <% end %>
+		 
+          <%= yield %>
+        
+
+      <footer>
+        
+      </footer>
+    </div> <!-- /container -->
+
+
+
+
+
+  </body>
+</html>

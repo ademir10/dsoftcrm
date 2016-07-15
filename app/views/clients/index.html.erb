@@ -1,0 +1,38 @@
+<%- model_class = Client -%>
+
+  <h1>Clientes <%= image_tag 'client.png' %></h1>
+  
+  <%= link_to 'Excel Download', clients_path(:format => :xls, :exportar => 'SIM'), class: 'btn btn-success' %>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_client_path,
+            :class => 'btn btn-primary' %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name('nome') %></th>
+      <th><%= model_class.human_attribute_name('celular') %></th>
+      <th><%= model_class.human_attribute_name('criado em') %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= link_to client.name, client_path(client) %></td>
+        <td><%= client.cellphone %></td>
+        <td><%= client.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_client_path(client), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      client_path(client),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

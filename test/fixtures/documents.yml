@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: 1
+  filename: MyString
+  content_type: MyString
+  file_contents: 
+
+two:
+  owner: 1
+  filename: MyString
+  content_type: MyString
+  file_contents: 

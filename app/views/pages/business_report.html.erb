@@ -1,0 +1,157 @@
+<!-- CSS PARA REMOVER O BOTÃO IMPRIMIR NA VIEW DE IMPRESSÃO -->
+  <style type="text/css">
+	@media print {
+    #printbtn {
+        display :  none;
+    }
+}
+</style>
+<h1>Análise geral de pesquisas <%= image_tag 'chart.png' %></h1>
+ <%= form_tag(business_report_path, method: :get) do %>
+ 
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date1,params[:date1], placeholder: 'data inicial', class: 'form-control', id: 'printbtn') %>
+		</div>
+		</div>
+
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date2,params[:date2], placeholder: 'data final', class: 'form-control', id: 'printbtn') %>	
+		</div>
+		</div>
+	</div>	
+
+		<%= submit_tag "Consultar", class: 'btn btn-success', id: 'printbtn' %>
+<% end %>
+</p>
+
+<!-- VERIFICA A QUANTIDADE DE VENDAS QUE FORAM EFETIVADAS COM BASE NO PERIODO INFORMADO -->
+	
+<div class="panel panel-default">
+  <div class="panel-heading" >Totais de Pesquisas e Vendas efetivadas </div>
+  <h5 class="panel-body">
+ <% if @datainicial.present? && @datafinal.present? %>
+  <font color="#34495e">Total Agendamentos <b><%= @total_meeting %></b></font><br />
+  <font color="#34495e">Total Vendas efetivadas <b><%= @total_meeting_sale %></b></font>
+  <hr />
+    <font color="#34495e">Total Pacote de Viajem <b><%= @total_pack %></b></font><br />
+  <font color="#34495e">Total Vendas efetivadas <b><%= @total_pack_sale %></b></font>
+  <hr />
+  <font color="#34495e">Total Transporte Aéreo <b><%= @total_air %></b></font><br />
+  <font color="#34495e">Total Vendas efetivadas <b><%= @total_air_sale %></b></font>
+  <hr />
+  <font color="#34495e">Total Transporte Rodoviário <b><%= @total_rodo %></b></font><br />
+  <font color="#34495e">Total Vendas efetivadas <b><%= @total_rodo_sale %></b></font>
+ </div>
+ <% else %>
+ <font color="#34495e"><b>Aviso:</b> Informe o periodo desejado para saber os totais de pesquisas e vendas efetivadas.</font><br /> 
+ </div>
+<% end %>
+ 
+<div class="panel panel-default">
+  <div class="panel-heading" >Percentual de pesquisas por funcionários </div>
+  <h5 class="panel-body">
+  <% if @datainicial.present? && @datafinal.present? %>
+  
+  <font color="#34495e">Agendamentos</font>
+  <%= pie_chart Meeting.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('meetings.clerk_name').count %>
+  <hr />
+  <font color="#34495e">Pacote de Viagem</font>
+  <%= pie_chart Packsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('packsearches.user').count %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>
+  <%= pie_chart Airsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('airsearches.user').count %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>
+  <%= pie_chart Rodosearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('rodosearches.user').count %>
+ 
+  <% else %>
+  
+  <font color="#34495e">Agendamentos</font>
+  <%= pie_chart Meeting.where("created_at::date = ?", Date.today).group('meetings.clerk_name').count %>
+  <hr />
+  <font color="#34495e">Pacote de viagem</font>
+  <%= pie_chart Packsearch.where("created_at::date = ?", Date.today).group('packsearches.user').count %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>
+  <%= pie_chart Airsearch.where("created_at::date = ?", Date.today).group('airsearches.user').count %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>
+  <%= pie_chart Rodosearch.where("created_at::date = ?", Date.today).group('rodosearches.user').count %>
+  
+   <% end %>
+  </h5>
+  </div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" >Percentual de resultados por perfil de cliente </div>
+  <h5 class="panel-body">
+  <% if @datainicial.present? && @datafinal.present? %>
+  
+  <font color="#34495e">Agendamentos</font>
+  <%= pie_chart Meeting.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('meetings.type_client').count %>
+  <hr />
+  <font color="#34495e">Pacote de viagem</font>
+  <%= pie_chart Packsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('packsearches.type_client').count %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>
+  <%= pie_chart Airsearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('airsearches.type_client').count %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>
+  <%= pie_chart Rodosearch.where("created_at::date BETWEEN ? AND ?", @datainicial, @datafinal).group('rodosearches.type_client').count %>
+   
+  <% else %>
+  
+  <font color="#34495e">Agendamentos</font>
+  <%= pie_chart Meeting.where("created_at::date = ?", Date.today).group('meetings.type_client').count %>
+  <hr />
+  <font color="#34495e">Pacote de viagem</font>
+  <%= pie_chart Packsearch.where("created_at::date = ?", Date.today).group('packsearches.type_client').count %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>
+  <%= pie_chart Airsearch.where("created_at::date = ?", Date.today).group('airsearches.type_client').count %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>
+  <%= pie_chart Rodosearch.where("created_at::date = ?", Date.today).group('rodosearches.type_client').count %>
+
+  <% end %>
+ </h5>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading" >Vendas efetivadas por Colaborador </div>
+  <h5 class="panel-body">
+  <% if @datainicial.present? && @datafinal.present? %>	
+  
+  <font color="#34495e">Agendamentos</font>
+  <%= bar_chart Meeting.order('meetings.clerk_name').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('status = ?', 'COMPROU').group('meetings.clerk_name').sum("meetings.cotation_value") %>
+  <hr />
+  <font color="#34495e">Pacote de viagem</font>		
+  <%= bar_chart Packsearch.order('packsearches.user').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('packsearches.user').sum("packsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>		
+  <%= bar_chart Airsearch.order('airsearches.user').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('airsearches.user').sum("airsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>		
+  <%= bar_chart Rodosearch.order('rodosearches.user').where("updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('rodosearches.user').sum("rodosearches.cotation_value") %>
+    
+  <% else %>
+  
+   <font color="#34495e">Agendamentos</font>
+  <%= bar_chart Meeting.order('meetings.clerk_name').where("updated_at::date = ?", Date.today).where('status = ?', 'COMPROU').group('meetings.clerk_name').sum("meetings.cotation_value") %>
+  <hr />
+  <font color="#34495e">Pacote de viagem</font>		
+  <%= bar_chart Packsearch.order('packsearches.user').where("updated_at::date = ?", Date.today).where('finished = ?', 'SIM').group('packsearches.user').sum("packsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo</font>		
+  <%= bar_chart Airsearch.order('airsearches.user').where("updated_at::date = ?", Date.today).where('finished = ?', 'SIM').group('airsearches.user').sum("airsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário</font>		
+  <%= bar_chart Rodosearch.order('rodosearches.user').where("updated_at::date = ?", Date.today).where('finished = ?', 'SIM').group('rodosearches.user').sum("rodosearches.cotation_value") %>
+
+  <% end %>
+ </h5>
+</div>

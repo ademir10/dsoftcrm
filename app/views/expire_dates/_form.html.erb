@@ -1,0 +1,42 @@
+<%= form_for @expire_date, :html => { :class => "form-horizontal expire_date" } do |f| %>
+
+  <% if @expire_date.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@expire_date.errors.count, "error") %> prohibited this expire_date from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @expire_date.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label 'Data', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-3">
+      <%= f.date_field :date_expire, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:date_expire) %>
+  </div>
+   
+  <div class="form-group"> 
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;
+  <%= f.label "Ativo?" %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= f.check_box :active %>
+  <%=f.error_span(:active) %>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit 'Salvar', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                expire_dates_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,61 @@
+<!-- CSS PARA REMOVER O BOTÃO IMPRIMIR NA VIEW DE IMPRESSÃO -->
+  <style type="text/css">
+	@media print {
+    #printbtn {
+        display :  none;
+    }
+}
+</style>
+
+<h1>Análise gráfica de Marketing <%= image_tag 'chart.png' %></h1>
+ <%= form_tag(marketing_report_path, method: :get) do %>
+ 
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date1,params[:date1], placeholder: 'data inicial', class: 'form-control', id: 'printbtn') %>
+		</div>
+		</div>
+
+<div class="form-group">			  
+		<div class="row">
+			  <div class="col-lg-2">
+		<%= date_field_tag(:date2,params[:date2], placeholder: 'data final', class: 'form-control', id: 'printbtn') %>	
+		</div>
+		</div>
+	</div>	
+
+		<%= submit_tag "Consultar", class: 'btn btn-success', id: 'printbtn' %>
+<% end %>
+</p>
+ 
+<div class="panel panel-default">
+  <div class="panel-heading" >Retorno de vendas por segmento de Marketing </div>
+  <h5 class="panel-body">
+  <% if @datainicial.present? && @datafinal.present? %>
+  
+  <font color="#34495e">Pacote de Viagem - Quantidade de pesquisas: <strong><%= @qnt_pack %></strong></font><br />
+  <%= bar_chart Packsearch.joins('inner join answers on packsearches.q1 = answers.id').where("packsearches.updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('answers.description').sum("packsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo - Quantidade de pesquisas: <strong><%= @qnt_air %></strong></font>
+  <%= bar_chart Airsearch.joins('inner join answers on airsearches.q1 = answers.id').where("airsearches.updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('answers.description').sum("airsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário - Quantidade de pesquisas: <strong><%= @qnt_rodo %></strong></font>
+  <%= bar_chart Rodosearch.joins('inner join answers on rodosearches.q1 = answers.id').where("rodosearches.updated_at::date BETWEEN ? AND ?", @datainicial, @datafinal).where('finished = ?', 'SIM').group('answers.description').sum("rodosearches.cotation_value") %>
+
+  <% else %>
+
+  <font color="#34495e">Pacote de Viagem - Quantidade de pesquisas: <strong><%= @qnt_pack %></strong></font><br />
+  <%= bar_chart Packsearch.joins('inner join answers on packsearches.q1 = answers.id').where("packsearches.created_at::date = ?", Date.today).where('finished = ?', 'SIM').group('answers.description').sum("packsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Aéreo - Quantidade de pesquisas: <strong><%= @qnt_air %></strong></font>
+  <%= bar_chart Airsearch.joins('inner join answers on airsearches.q1 = answers.id').where("airsearches.created_at::date = ?", Date.today).where('finished = ?', 'SIM').group('answers.description').sum("airsearches.cotation_value") %>
+  <hr />
+  <font color="#34495e">Transporte Rodoviário - Quantidade de pesquisas: <strong><%= @qnt_rodo %></strong></font>
+  <%= bar_chart Rodosearch.joins('inner join answers on rodosearches.q1 = answers.id').where("rodosearches.created_at::date = ?", Date.today).where('finished = ?', 'SIM').group('answers.description').sum("rodosearches.cotation_value") %>
+
+ 
+  <% end %>
+  </h5>
+  </div>
+

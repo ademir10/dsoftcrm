@@ -1,0 +1,26 @@
+<%- model_class = Question -%>
+<div class="page-header">
+  <h1>Pergunta: <font color="red"><%= @question.description %></font></h1>
+</div>
+
+<h5><dl class="dl-horizontal">
+<strong><%= model_class.human_attribute_name('categoria') %>:</strong>&nbsp;
+<%= @question.category.name %>
+</dl></h5>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              questions_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_question_path(@question), :class => 'btn btn-default' %>
+<!--              
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              question_path(@question),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+             -->
+
+<h2>Respostas</h2>
+<%= render "answers/item" %>
+<%= render "answers/form" %>
+

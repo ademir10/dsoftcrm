@@ -1,0 +1,64 @@
+<div class="row">
+  <!-- Not implemented on tutorial -->
+  <div class="col-md-4">
+    <div style="height: 300px; overflow-y: auto;">
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">Usuários</div>
+
+        <!-- Table -->
+        <table class="table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @users.each_with_index do |user, index| %>
+              <tr>
+                <td><%= index +=1 %></td>
+                <td><%= user.name %></td>
+                <td>
+                  <%= link_to "Enviar mensagem", "#", class: "btn btn-success btn-xs start-conversation",
+                              "data-sid" => current_user.id, "data-rip" => user.id %>
+                </td>
+              </tr>
+          <% end %>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <h3>Suas conversas</h3>
+
+    <div style="height: 400px; overflow-y: auto;">
+      <% if @conversations.any? %>
+          <ul class="media-list">
+            <% @conversations.each do |conversation| %>
+                <li class="media">
+                  <%= image_tag("http://placehold.it/50x50", class: "media-object pull-left") %>
+                  <div class="media-body">
+                    <%= link_to "Abrir chat", conversation_path(conversation.id), class: "conversation", "data-cid" => conversation.id %>
+                        <h4 class="media-heading"><%= conversation_interlocutor(conversation).name %></h4>
+                        <p><%= conversation.meessages.last.nil? ? "No messages" : truncate(conversation.meessages.last.body, length: 45) %></p>
+                  </div>
+                </li>
+
+            <% end %>
+          </ul>
+      <% else %>
+          <p>You have no conversations. Click send message with any user to create one.</p>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div class="col-md-4">
+
+  </div>
+
+</div>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  client: MyString
+  phone: MyString
+  q1: 1
+  q2: 1
+  q3: 1
+
+two:
+  client: MyString
+  phone: MyString
+  q1: 1
+  q2: 1
+  q3: 1

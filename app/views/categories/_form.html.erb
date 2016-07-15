@@ -1,0 +1,87 @@
+<%= form_for @category, :html => { :class => "form-horizontal category" } do |f| %>
+
+  <% if @category.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @category.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label 'nome', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+  
+  <% if current_user.type_access == 'MASTER' %>
+  <div class="form-group">
+    <%= f.label 'quantidade perguntas', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-1">
+      <%= f.number_field :qnt_question, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:qnt_question) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'link da pagina', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-5">
+      <%= f.text_field :link, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:link) %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label 'posição na tela', :class => 'control-label col-lg-2' %>
+    <div class="col-lg-1">
+      <%= f.number_field :position, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:position) %>
+  </div>
+  
+  <% end %>
+    
+  <hr />
+  <h3>Editar range de perfis</h3>
+  
+  <h5>Cliente Frio: </h5>
+  
+  <div class="input-group col-lg-2">
+  <%= f.text_field :r1, :value=> 0, class: 'form-control', readonly: true %>  
+  <span class="input-group-addon">-</span>
+  <%= f.text_field :r2, class: 'form-control', placeholder: "até", id: 'r1' %> 
+  </div>
+  
+  <h5>Cliente Morno: </h5>
+  <div class="input-group col-lg-2">
+  <%= f.text_field :r3, class: 'form-control', placeholder: "de", id: 'r2' %>  
+  <span class="input-group-addon">-</span>
+  <%= f.text_field :r4, class: 'form-control', placeholder: "até", id: 'r3' %> 
+  </div>
+  
+  <h5>Cliente Quente: </h5>
+  <div class="input-group col-lg-2">
+  <%= f.text_field :r5, class: 'form-control', placeholder: "de", id: 'r4'%>  
+  <span class="input-group-addon">-</span>
+  <%= f.text_field :r6, class: 'form-control', placeholder: "até", id: 'r5' %> 
+  </div>
+
+    
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit 'Salvar', :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                categories_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  
+  pool: 5
+
+development:
+  <<: *default
+  database: crm_dsoft
+  username: admin
+  password: 44262718
+  host: localhost
+  port: 5432
+
+  
+production:
+  <<: *default
+  database: crm_dsoft_production
+  username: admin
+  password: 44262718

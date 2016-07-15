@@ -1,0 +1,22 @@
+DOCUMENTA��O PARA CRIAR NOVAS PESQUISAS COM BASE EM MODELO EXISTENTE
+1� - fazer um scaffold sem nenhum campo informado, somente pra que seja criada a migration e as views em branco
+2� - copiar o conte�do da migration modelo para a nova migration e fazer o rake db:migrate
+3� - criar as views adicionais e inseri-las no arquivo de rotas
+4� - deixo o model igual ao da pesquisa modelo
+5� - copiar o conteudo de todas as views da pesquisa modelo para as views do scaffold substituindo o nome do modelo em tudo
+6� - copiar o conteudo do controller e deixar igual, alterando somente o nome do modelo e a quantidade de perguntas se 
+for maior ou menor que 10
+7� - adicionar a nova pesquisa no controller Documents para os anexos
+
+CONFIGURAÇÃO PARA IMPLANTAÇÃO:
+Depois de instalada a aplicação e criado o banco de dados, faça o rake db:seed, informe uma data de expiração,
+libere tudo para o usuario.
+Cadastre as categorias e quantidade de respostas
+Nos links de Airsearches, Rodosearches e Packsearches colocar (airsearches, rodosearches e packsearches)
+
+
+OBS - SEMPRE CADASTRAR AS PERGUNTAS NA SEGUINTE ORDEM:
+- PACOTE DE VIAGEM - 13 perguntas / packsearches
+- TRANSPORTE AÉREO - 12 perguntas / airsearches
+- TRANSPORTE RODOVIÁRIO - 6 perguntas / rodosearches
+- AGENDA - meetings/new

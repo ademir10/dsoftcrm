@@ -1,0 +1,29 @@
+<h1>Análise gráfica anual de vendas <%= image_tag 'sales_report.png' %></h1>
+
+<div class="panel panel-default">
+<div class="panel-heading" >Agendamentos </div>
+<h5 class="panel-body">
+<div id="chart-container-m"><%= @meeting_annual.render() %></div>
+</h5>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading" >Pacote de Viagens </div>
+<h5 class="panel-body">
+<div id="chart-container-p"><%= @pack_annual.render() %></div>
+</h5>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading" >Transporte Aéreo </div>
+<h5 class="panel-body">
+<div id="chart-container-a"><%= @air_annual.render() %></div>
+</h5>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading" >Transporte Rodoviário </div>
+<h5 class="panel-body">
+<div id="chart-container-r"><%= @rodo_annual.render() %></div>
+</h5>
+</div>
