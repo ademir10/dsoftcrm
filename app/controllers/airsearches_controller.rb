@@ -63,8 +63,14 @@ class AirsearchesController < ApplicationController
         #calcula o percentual já vendido geral para o ADMIN
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
+        
+        #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
+        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+          puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
+        else
         #atualiza os dados de meta mensal do usuário
         User.where(type_access: 'ADMIN').update_all(qnt_research: t_qnt, total_sale: t_research, current_percent: c_goal.to_f)
+        end
       #-----------------------------------FIM DO BLOCO-------------------------------------------------------------
     
         #inserindo no log de atividades
@@ -137,10 +143,16 @@ class AirsearchesController < ApplicationController
         #calcula o percentual já vendido geral para o ADMIN
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
+        
+        #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
+        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+          puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
+        else
+        
         #atualiza os dados de meta mensal do usuário
         User.where(type_access: 'ADMIN').update_all(qnt_research: t_qnt, total_sale: t_research, current_percent: c_goal.to_f)
       #-----------------------------------FIM DO BLOCO-------------------------------------------------------------
-    
+        end
     #verifica se a data para um novo agendamento foi inserida
     #só faz o agendamento automático se a data for informada com uma data posterior a data atual
    if airsearch_params[:schedule].present? && airsearch_params[:schedule].to_date > Date.today
@@ -372,8 +384,14 @@ class AirsearchesController < ApplicationController
         #calcula o percentual já vendido geral para o ADMIN
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
+        
+        #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
+        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+          puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
+        else
         #atualiza os dados de meta mensal do usuário
         User.where(type_access: 'ADMIN').update_all(qnt_research: t_qnt, total_sale: t_research, current_percent: c_goal.to_f)
+        end     
       #-----------------------------------FIM DO BLOCO-------------------------------------------------------------
       
         #inserindo no log de atividades
@@ -597,8 +615,14 @@ class AirsearchesController < ApplicationController
         #calcula o percentual já vendido geral para o ADMIN
         c_goal = (t_research.to_f / goal_admin.goal.to_f) * 100
         c_goal = c_goal.round(2)
+        
+        #INSERI ESSA VERIFICAÇÃO PARA OS CASOS ONDE NÃO FORAM INFORMADAS METAS PARA O FUNCIONÁRIOS
+        if goal_admin.goal.blank? || goal_admin.goal.nil? || goal_admin.goal.empty?
+          puts 'NÃO TEM METAS! O VALOR É ' + c_goal.to_s
+        else
         #atualiza os dados de meta mensal do usuário
         User.where(type_access: 'ADMIN').update_all(qnt_research: t_qnt, total_sale: t_research, current_percent: c_goal.to_f)
+        end
       #-----------------------------------FIM DO BLOCO-------------------------------------------------------------
 
         #inserindo no log de atividades
